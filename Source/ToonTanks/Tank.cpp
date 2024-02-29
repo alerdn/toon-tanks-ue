@@ -16,6 +16,26 @@ ATank::ATank()
     Camera->SetupAttachment(SpringArm);
 }
 
+void ATank::BeginPlay()
+{
+    Super::BeginPlay();
+
+    PlayerControllerRef = Cast<APlayerController>(GetController());
+}
+
+void ATank::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    if (PlayerControllerRef)
+    {
+        FHitResult HitResult;
+        PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult);
+
+       RotateTurret(HitResult.ImpactPoint);
+    }
+}
+
 void ATank::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -33,7 +53,8 @@ void ATank::Move(float Value)
     AddActorLocalOffset(DeltaLocation, true);
 }
 
-void ATank::Turn(float Value) {
+void ATank::Turn(float Value)
+{
     FRotator DeltaRotation = FRotator::ZeroRotator;
     float DeltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
 
