@@ -7,7 +7,7 @@
 #include "Tank.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class TOONTANKS_API ATank : public ABasePawn
@@ -18,23 +18,27 @@ public:
 	ATank();
 
 	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
+
+	void HandleDestruction();
+
+	APlayerController *GetTankPlayerController() const { return TankPlayerController; }
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	class USpringArmComponent* SpringArm;
+	class USpringArmComponent *SpringArm;
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	class UCameraComponent* Camera;
+	class UCameraComponent *Camera;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float Speed = 800.f;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnRate = 100.f;
 
-	APlayerController* PlayerControllerRef;
+	APlayerController *TankPlayerController;
 
 	void Move(float Value);
 	void Turn(float Value);
