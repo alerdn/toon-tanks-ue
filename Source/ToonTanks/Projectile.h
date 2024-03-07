@@ -20,12 +20,14 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	UStaticMeshComponent* StaticMesh;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	class UProjectileMovementComponent* MovementComp;
-
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	class UParticleSystem* HitParticles;
+	
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	float Damage = 50.f;
 
 	UFUNCTION()
