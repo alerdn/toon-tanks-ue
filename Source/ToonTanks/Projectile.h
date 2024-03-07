@@ -22,10 +22,15 @@ protected:
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	UStaticMeshComponent* StaticMesh;
+	
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	class UProjectileMovementComponent* MovementComp;
+	
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	class UParticleSystem* HitParticles;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
+	class UParticleSystemComponent* SmokeTrail;
 	
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float Damage = 50.f;
