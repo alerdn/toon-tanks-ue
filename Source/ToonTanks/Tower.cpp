@@ -2,6 +2,7 @@
 
 #include "Tower.h"
 #include "Tank.h"
+#include "TurretAIController.h" 
 #include "Kismet/GameplayStatics.h"
 
 void ATower::BeginPlay()
@@ -9,6 +10,7 @@ void ATower::BeginPlay()
     Super::BeginPlay();
 
     Tank = Cast<ATank>(UGameplayStatics::GetPlayerPawn(this, 0));
+    Controller = Cast<ATurretAIController>(GetController());
 
     GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &ATower::CheckFireCondition, FireRate, true);
 }
@@ -17,7 +19,9 @@ void ATower::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    if (InFireRange())
+    if (!Controller) return;
+
+    if (Controller->LineOfSightTo(Tank) && InFireRange())
     {
         RotateTurret(Tank->GetActorLocation());
     }
@@ -36,7 +40,7 @@ void ATower::CheckFireCondition()
         return;
     }
 
-    if (InFireRange() && Tank->bAlive)
+    if (Controller->LineOfSightTo(Tank) && InFireRange() && Tank->bAlive)
     {
         Fire();
     }

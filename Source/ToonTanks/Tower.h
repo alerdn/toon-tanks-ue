@@ -23,6 +23,7 @@ public:
 	void HandleDestruction();
 	
 private:
+	class ATurretAIController* AIController;
 	class ATank* Tank;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
